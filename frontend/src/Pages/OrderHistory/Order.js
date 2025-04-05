@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Loading from '../../Components/Loading/Loading';
 import { Store } from '../../Store';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { getError } from '../../utils';
-import OrderHistoryNew from './Order';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -20,8 +19,7 @@ const reducer = (state, action) => {
   }
 };
 
-export default function OrderHistory() {
-  const [Aucions,setAuctions] = useState([])
+export default function OrderHistoryNew() {
   const { state } = useContext(Store);
   const { userInfo } = state;
   const navigate = useNavigate();
@@ -29,20 +27,18 @@ export default function OrderHistory() {
   const [{ loading, error, orders }, dispatch] = useReducer(reducer, {
     loading: true,
     error: '',
+    orders: []
   });
+
   useEffect(() => {
     const fetchData = async () => {
-      let userInfo = JSON.parse(localStorage.getItem('userInfo'));
-      let userName = userInfo.name
-
       dispatch({ type: 'FETCH_REQUEST' });
       try {
-        const { data } = await axios.get(`/api/orders/getMyOction/${userName}`, {
+        const { data } = await axios.get(`/api/orders/mineNew`, {
           headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         dispatch({ type: 'FETCH_SUCCESS', payload: data });
-        console.log('userInfo', data);
-        setAuctions(data)
+        console.log('orders.....', data);
       } catch (error) {
         dispatch({
           type: 'FETCH_FAIL',
@@ -52,6 +48,11 @@ export default function OrderHistory() {
     };
     fetchData();
   }, [userInfo]);
+
+  // Function to format date
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString();
+  };
 
   return (
     <div>
@@ -69,62 +70,67 @@ export default function OrderHistory() {
         </div>
       ) : (
         <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold mb-8">Auction History</h1>
+          <h1 className="text-3xl font-bold mb-8">Owned Plots</h1>
 
           {/* Primary card */}
           <div className="border border-gray-300 rounded-md shadow-sm overflow-hidden mb-4">
             <div className="grid grid-cols-6 bg-gray-50 border-b border-gray-300 font-medium text-sm">
-              <div className="py-3 px-4">plot</div>
-              <div className="py-3 px-4"> End Date</div>
-              <div className="py-3 px-4">your Bid</div>
-              {/* <div className="py-3 px-4"></div> */}
-              <div className="py-3 px-4">Bid Confirmed</div>
+              <div className="py-3 px-4">Name</div>
+              <div className="py-3 px-4">Date</div>
+              <div className="py-3 px-4">Total</div>
+              <div className="py-3 px-4">Payment Status</div>
+              <div className="py-3 px-4">Completed</div>
               <div className="py-3 px-4">Actions</div>
             </div>
           </div>
 
-          {Aucions.map((Aucion) => (
+          {orders.map((order) => (
             // Order card
             <div
               className="border border-gray-300 rounded-md shadow-sm overflow-hidden mx-4 mb-4 hover:scale-[101%] backface-hidden duration-300"
-              key={Aucion._id}
+              key={order._id}
             >
               <div className="grid grid-cols-6 bg-gray-100 text-sm font-medium text-gray-700">
                 <div className="py-4 px-4 flex items-center">
-                
+                  {order.orderItems && order.orderItems.map((item) => (
                     <img
-                      src={Aucion.imageUrl
-                      }
-                      alt="User Avatar"
+                      src={item.image}
+                      alt="Product"
                       className="rounded-full w-6 h-6 mr-[-15px] md:flex"
-                      key={Aucion._id}
+                      key={item._id || item.name}
                     />
-     
+                  ))}
                   <span className="truncate ml-0 sm:ml-8 hidden lg:block">
-                    {Aucion._id}
+                    {order._id}
                   </span>
                 </div>
                 <div className="py-4 px-4">
-                  {Aucion.createdAt.substring(0, 10)}
+                  {order.createdAt && formatDate(order.createdAt)}
                 </div>
                 <div className="py-4 px-4 font-auto">
                   <small>₹</small>
-                  {Aucion.currentBid.toFixed(2)}
+                  {order.totalPrice && order.totalPrice.toFixed(2)}
                 </div>
-                
                 <div
-                  className={`py-4 px-4 ${Aucion.createdAt.substring(0, 10)}
-.isDelivered ? 'text-green-600' : 'text-red-600'
+                  className={`py-4 px-4 ${
+                    order.isPaid ? 'text-green-600' : 'text-red-600'
                   }`}
                 >
-                  {Aucion.updatedAt ? 'Yes' : 'No'}
+                  {order.isPaid ? 'Yes' : 'No'}
+                </div>
+                <div
+                  className={`py-4 px-4 ${
+                    order.isDelivered ? 'text-green-600' : 'text-red-600'
+                  }`}
+                >
+                  {order.isDelivered ? 'Yes' : 'No'}
                 </div>
                 <div className="py-3 px-auto lg:px-4 text-center">
                   <button
                     type="button"
-                    className="text-gray-600 hover:text-gray-900 focus:outline-none flex items-center "
+                    className="text-gray-600 hover:text-gray-900 focus:outline-none flex items-center justify-center w-full"
                     onClick={() => {
-                      navigate(`/order/${Aucion._id}`);
+                      navigate(`/order/${order._id}`);
                     }}
                   >
                     <p className="p-[6px] bg-slate-200 rounded-md hover:bg-slate-300 duration-200">
@@ -137,10 +143,6 @@ export default function OrderHistory() {
           ))}
         </div>
       )}
-
-      <>
-        <OrderHistoryNew/>
-      </>
     </div>
   );
 }

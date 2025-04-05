@@ -194,9 +194,9 @@ function App() {
             <>
               <Header />
               <AdminRoute>
-              <About/>
+              {/* <About/> */}
 
-                {/* <OrderListPage /> */}
+                <OrderListPage />
               </AdminRoute>
             </>
           }

@@ -52,7 +52,7 @@ export default function AddressPage() {
   return (
     <div>
       <Helmet>
-        <title>Shipping Address-EcomBidding</title>
+        <title>Address For Agreement</title>
       </Helmet>
       <div className="area">
         <ul className="circles">
@@ -71,7 +71,7 @@ export default function AddressPage() {
         <div className="flex justify-center bg-transparent items-center context">
           <div className="w-full max-w-2xl">
             <div className="text-center">
-              <h1 className="text-3xl font-bold mb-3">Shipping Address</h1>
+              <h1 className="text-3xl font-bold mb-3">Address For Agreement</h1>
             </div>
             <form
               className="bg-transparent shadow-md rounded px-8 pt-6 pb-8 mb-4"

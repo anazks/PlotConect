@@ -149,7 +149,14 @@ orderRouter.get(
     res.send(orders);
   })
 );
-
+orderRouter.get(
+  '/mineNew',
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find({ user: req.user._id });
+    res.send(orders);
+  })
+);
 orderRouter.get(
   '/getMyOction/:name',
   isAuth,

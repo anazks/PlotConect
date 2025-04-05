@@ -17,7 +17,7 @@ function Product(props) {
 
     const { data } = await axios.get(`/api/products/${item._id}`);
     if (data.stock < quantity) {
-      toast.error('Product is out of stock.');
+      toast.error('Land Currently Not Available.');
       return;
     }
     ctxDispatch({
@@ -32,7 +32,7 @@ function Product(props) {
     <div className="flex flex-wrap overflow-x-hidden">
       <div className="w-96 p-4">
         <div className="h-full rounded-lg overflow-hidden shadow-md border border-gray-200">
-          <Link to={`/products/${product.url}`}>
+          <Link>
             <img
               className="w-full h-64 object-contain mx-auto hover:scale-105 duration-500"
               src={product.image}
@@ -40,7 +40,7 @@ function Product(props) {
             />
           </Link>
           <div className="p-4">
-            <Link to={`/products/${product.url}`}>
+            <Link>
               <h2 className="text-gray-900 font-medium mb-2">{product.name}</h2>
               <div className="items-center mb-4">
                 <Rating rating={product.rating} reviews={product.reviews} />
@@ -64,7 +64,7 @@ function Product(props) {
                 className="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded-lg mt-4"
                 onClick={() => addToCartHandler(product)}
               >
-                Add to Cart
+                Interested
               </button>
             )}
           </div>

@@ -38,7 +38,7 @@ export default function CheckoutSteps(props) {
         >
           <span className="sr-only">Step 2</span>2
         </button>
-        <p className="mt-1 font-medium text-gray-900">Shipping</p>
+        <p className="mt-1 font-medium text-gray-900">Address</p>
       </div>
       {props.step2 && props.step3 ? (
         <div className="w-full h-[3px] bg-blue-500"></div>

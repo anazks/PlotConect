@@ -39,7 +39,7 @@ export default function CartPage() {
         <title>Cart-PLOT CONNECT</title>
       </Helmet>
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="mb-8 text-3xl font-bold">Shopping Cart</h1>
+        <h1 className="mb-8 text-3xl font-bold">Interested Plots</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
           <div className="md:col-span-8">
@@ -200,7 +200,7 @@ export default function CartPage() {
                   disabled={cartItems.length === 0}
                   onClick={checkoutHandler}
                 >
-                  Checkout
+                  Payment Options
                 </button>
               </div>
             </div>

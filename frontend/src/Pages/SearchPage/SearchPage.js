@@ -39,29 +39,29 @@ const prices = [
     value: '1001-5000',
   },
   {
-    name: '₹5000 and up',
-    value: '5001-1000000',
+    name: '₹30,000 to 50000',
+    value: '30000-50000',
   },
 ];
 
-export const ratings = [
-  {
-    name: '4stars and up',
-    rating: 4,
-  },
-  {
-    name: '3stars and up',
-    rating: 3,
-  },
-  {
-    name: '2stars and up',
-    rating: 2,
-  },
-  {
-    name: '1stars and up',
-    rating: 1,
-  },
-];
+// export const ratings = [
+//   {
+//     name: '4stars and up',
+//     rating: 4,
+//   },
+//   {
+//     name: '3stars and up',
+//     rating: 3,
+//   },
+//   {
+//     name: '2stars and up',
+//     rating: 2,
+//   },
+//   {
+//     name: '1stars and up',
+//     rating: 1,
+//   },
+// ];
 
 export default function SearchPage() {
   const navigate = useNavigate();
@@ -165,7 +165,7 @@ export default function SearchPage() {
                   <option value="newest">Sort by: Newest Arrivals</option>
                   <option value="lowest">Price: low to high</option>
                   <option value="highest">Price: high to low</option>
-                  <option value="toprated">Avg. Customer Reviews</option>
+                  {/* <option value="toprated">Avg. Customer Reviews</option> */}
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                   <i className="fas fa-sort"></i>
@@ -264,7 +264,7 @@ export default function SearchPage() {
                 </Link>
 
                 <ul>
-                  {ratings.map((r) => (
+                  {/* {ratings.map((r) => (
                     <li key={r.name} className="mb-1 ml-4">
                       <Link
                         to={getFilterUrl({ rating: r.rating })}
@@ -276,7 +276,7 @@ export default function SearchPage() {
                         <Rating caption={' & up'} rating={r.rating} />
                       </Link>
                     </li>
-                  ))}
+                  ))} */}
                 </ul>
               </div>
 

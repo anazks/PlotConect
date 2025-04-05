@@ -61,8 +61,8 @@ function Home() {
           <ErrorPage />
         ) : (
           <>
-            {/* <Categories /> */}
-            <Welcome/>
+            <Categories />
+            {/* <Welcome/> */}
            <AuctionPage/>
             <div className="products flex flex-wrap justify-center">
               {products.map((product) => (

@@ -288,7 +288,7 @@ const AuctionDetail = () => {
                     <p className="text-lg font-semibold">
                       {isHighestBidder() ? (
                         <button className="w-full py-2 px-4 bg-green-500 hover:bg-green-600 text-white duration-200 rounded-md mt-4">
-                          ADD TO CART
+                          You win This Plot
                         </button>
                       ) : (
                         <button
